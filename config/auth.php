@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'superuser',
         ],
+        'subadmin' => [
+            'driver' => 'session',
+            'provider' => 'subadmin',
+        ],
     ],
 
     /*
@@ -72,6 +76,10 @@ return [
         'superuser' => [
             'driver' => 'eloquent',
             'model' => App\Models\SuperUser::class,
+        ],
+        'subadmin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SubAdmin::class,
         ],
 
         // 'users' => [
@@ -108,6 +116,12 @@ return [
         ],
         'superuser' => [
             'provider' => 'superuser',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'subadmin' => [
+            'provider' => 'subadmin',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

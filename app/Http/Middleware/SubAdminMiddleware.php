@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class SuperUserMiddleware
+class SubAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class SuperUserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('superuser')->check()) {
+        if (Auth::guard('subadmin')->check()) {
             return $next($request);
         }
-        return redirect()->route('superuser.auth.login');
+        return redirect()->route('subadmin.auth.login');
     }
 }
