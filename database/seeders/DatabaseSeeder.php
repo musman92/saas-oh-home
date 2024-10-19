@@ -14,9 +14,25 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Super User: superuser@example.com
+        \App\Models\SuperUser::create([
+            'name' => 'Super User',
+            'email' => 'superuser@example.com',
+            'password' => \Hash::make('password'),
+        ]);
+
+        // - Sub Admin: subadmin@example.com
+        \App\Models\SubAdmin::create([
+            'name' => 'Sub Admin',
+            'email' => 'subadmin@example.com',
+            'password' => \Hash::make('password'),
+        ]);
+
+        // - User: user@example.com
+        \App\Models\User::create([
+            'name' => 'User',
+            'email' => 'user@example.com',
+            'password' => \Hash::make('password'),
+        ]);
     }
 }

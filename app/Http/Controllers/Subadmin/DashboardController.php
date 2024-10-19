@@ -14,6 +14,6 @@ class DashboardController extends Controller
   public function dashboard()
   {
 
-    return view('super-user.dashboard');
+    return view('sub-admin.dashboard');
   }
 }

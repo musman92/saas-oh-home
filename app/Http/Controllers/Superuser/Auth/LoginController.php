@@ -27,9 +27,9 @@ class LoginController extends Controller
     ]);
 
     $admin = SuperUser::where('email', $request->email)->first();
-    if (isset($admin) && $admin->status != 1) {
+    if (!isset($admin)) {
         return redirect()->back()->withInput($request->only('email', 'remember'))
-            ->withErrors(['You are blocked!!, contact with admin.']);
+            ->withErrors(['Email does not exist.']);
     }else{
         if (auth('superuser')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             return redirect()->route('superuser.dashboard');

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Subadmin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use App\Models\SuperAdmin;
+use App\Models\SubAdmin;
 
 class LoginController extends Controller
 {
@@ -26,14 +26,14 @@ class LoginController extends Controller
         'password' => 'required|min:6'
     ]);
 
-    $admin = SuperUser::where('email', $request->email)->first();
-    if (isset($admin) && $admin->status != 1) {
-        return redirect()->back()->withInput($request->only('email', 'remember'))
-            ->withErrors(['You are blocked!!, contact with admin.']);
-    }else{
-        if (auth('subadmin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            return redirect()->route('subadmin.dashboard');
-        }
+    $admin = SubAdmin::where('email', $request->email)->first();
+    if (!isset($admin)) {
+      return redirect()->back()->withInput($request->only('email', 'remember'))
+          ->withErrors(['Email does not exist.']);
+    } else {
+      if (auth('subadmin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+        return redirect()->route('subadmin.dashboard');
+      }
     }
 
     return redirect()->back()->withInput($request->only('email', 'remember'))
