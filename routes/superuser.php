@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Superuser\PlanController;
+use App\Http\Controllers\Superuser\SubAdminController;
 
 
 Route::group(['namespace' => 'Superuser', 'prefix' => 'superuser', 'as' => 'superuser.'], function () {
@@ -29,6 +30,11 @@ Route::group(['namespace' => 'Superuser', 'prefix' => 'superuser', 'as' => 'supe
     Route::get('/plans/create', [PlanController::class, 'create'])->name('plans.create');
     Route::post('/plans', [PlanController::class, 'store'])->name('plans.store');
     
+    /**
+     * Sub Admin Routes
+     */
+    Route::resource('subadmins', SubAdminController::class);
+
     Route::get('/payment', function () {
       return view('super-user.plan.payment');
     })->name('payment.view');

@@ -19,6 +19,9 @@
                     <x-nav-link :href="route('superuser.plans.index')" :active="request()->routeIs('superuser.plans.*')">
                         {{ __('Plans') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('superuser.subadmins.index')" :active="request()->routeIs('superuser.subadmins.*')">
+                        {{ __('Sub Admins') }}
+                    </x-nav-link>
                 </div>
             </div>
 
