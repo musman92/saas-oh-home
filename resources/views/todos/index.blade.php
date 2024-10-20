@@ -5,7 +5,7 @@
         {{ __('Todos') }}
       </h2>
       <div class="ml-auto">
-        @can('todo.create')
+        @can('todos.store')
         <a href="{{ route('todos.create') }}" class="bg-green-500 hover:bg-green-700 border rounded-md text-white font-bold py-2 px-4 rounded">Create New Todo</a>
         @endcan
       </div>
@@ -23,7 +23,7 @@
               <th scope="col" class="px-6 py-3">Title</th>
               <th scope="col" class="px-6 py-3">Desc.</th>
               <th scope="col" class="px-6 py-3">Status</th>
-              @if(auth()->user()->can('todo.update') || auth()->user()->can('todo.delete'))
+              @if(auth()->user()->can('todos.update') || auth()->user()->can('todos.destroy'))
               <th scope="col" class="px-6 py-3">Action</th>
               @endif
             </tr>
@@ -35,12 +35,12 @@
               <td class="px-6 py-4">{{ $todo->title }}</td>
               <td class="px-6 py-4">{{ $todo->description }}</td>
               <td class="px-6 py-4">{{ $todo->status }}</td>
-              @if(auth()->user()->can('todo.update') || auth()->user()->can('todo.delete'))
+              @if(auth()->user()->can('todos.update') || auth()->user()->can('todos.destroy'))
               <td class="px-6 py-4">
-                @can('todo.update')
+                @can('todos.update')
                 <a href="{{ route('todos.edit', $todo->id) }}" class="text-blue-600 hover:text-blue-900">Edit</a>
                 @endcan
-                @can('todo.delete')
+                @can('todos.destroy')
                 <form action="{{ route('todos.destroy', $todo->id) }}" method="POST" class="inline-block">
                   @csrf
                   @method('DELETE')

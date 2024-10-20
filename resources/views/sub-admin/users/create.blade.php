@@ -43,7 +43,7 @@
                           <div class="mt-1 block w-full">
                             @foreach($permissions as $permission)
                               <div class="flex items-center mb-2">
-                                <input id="permission-{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->id }}" class="form-checkbox">
+                                <input id="permission-{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->name }}" class="form-checkbox">
                                 <label for="permission-{{ $permission->id }}" class="ml-2">{{ $permission->name }}</label>
                               </div>
                             @endforeach

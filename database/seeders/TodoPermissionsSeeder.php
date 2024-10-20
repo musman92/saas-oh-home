@@ -14,10 +14,10 @@ class TodoPermissionsSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'todo.create',
-            'todo.view',
-            'todo.update',
-            'todo.delete',
+            'todos.store',
+            'todos.index',
+            'todos.update',
+            'todos.destroy',
         ];
 
         foreach ($permissions as $permission) {

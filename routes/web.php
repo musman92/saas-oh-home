@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
     /**
      * TODOs Route
      */
-    Route::resource('todos', TodoController::class);
+    Route::group(['middleware' => ['permission']], function () {
+        Route::resource('todos', TodoController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
