@@ -16,6 +16,9 @@
                     <x-nav-link :href="route('superuser.dashboard')" :active="request()->routeIs('superuser.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('superuser.plans.index')" :active="request()->routeIs('superuser.plans.*')">
+                        {{ __('Plans') }}
+                    </x-nav-link>
                 </div>
             </div>
 
