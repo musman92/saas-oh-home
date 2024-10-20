@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Superuser;
+namespace App\Http\Controllers\Subadmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,14 +20,15 @@ class PlanController extends Controller
   public function index()
   {
     $plans = Plan::where([
-        'user_id' => auth()->guard('superuser')->id(),
-        'level' => 'sub_admin',
-      ])->get();
-    return view('super-user.plans.index', compact('plans'));
+        'user_id' => auth()->guard('subadmin')->id(),
+        'level' => 'sub_user',
+      ])
+      ->get();
+    return view('sub-admin.plans.index', compact('plans'));
   }
 
   public function create() {
-    return view('super-user.plans.create');
+    return view('sub-admin.plans.create');
   }
 
   public function store(Request $request)
@@ -56,8 +57,8 @@ class PlanController extends Controller
       ]);
 
       $plan = Plan::create([
-        'user_id' => auth()->guard('superuser')->id(),
-        'level' => 'sub_admin',
+        'user_id' => auth()->guard('subadmin')->id(),
+        'level' => 'sub_user',
         'name' => $request->name,
         'amount' => $request->amount,
         'interval' => $request->interval,
@@ -70,7 +71,7 @@ class PlanController extends Controller
 
       \DB::commit();
       //redirect with success message
-      return redirect()->route('superuser.plans.index')->with('success', 'Plan created successfully');
+      return redirect()->route('subadmin.plans.index')->with('success', 'Plan created successfully');
     } catch (\Exception $e) {
       \DB::rollBack();
       dd($e->getMessage());
@@ -83,7 +84,7 @@ class PlanController extends Controller
       'interval' => $request->interval,
     ]);
 
-    return redirect()->route('superuser.plans.index');
+    return redirect()->route('subadmin.plans.index');
   }
 
 

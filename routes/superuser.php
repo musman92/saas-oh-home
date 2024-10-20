@@ -36,7 +36,7 @@ Route::group(['namespace' => 'Superuser', 'prefix' => 'superuser', 'as' => 'supe
     Route::resource('subadmins', SubAdminController::class);
 
     Route::get('/payment', function () {
-      return view('super-user.plan.payment');
+      return view('super-user.plans.payment');
     })->name('payment.view');
     
     Route::post('/create-plan', [PlanController::class, 'createPlan'])->name('create.plan');

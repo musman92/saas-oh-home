@@ -16,6 +16,15 @@
                     <x-nav-link :href="route('subadmin.dashboard')" :active="request()->routeIs('subadmin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('subadmin.subs.index')" :active="request()->routeIs('subadmin.subs.*')">
+                        {{ __('Subscription') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('subadmin.plans.index')" :active="request()->routeIs('subadmin.plans.*')">
+                        {{ __('Plans for Users') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('subadmin.users.index')" :active="request()->routeIs('subadmin.users.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
                 </div>
             </div>
 
