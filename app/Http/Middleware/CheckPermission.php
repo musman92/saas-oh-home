@@ -24,8 +24,6 @@ class CheckPermission
         $routeName = str_replace('edit', 'update', $routeName);
         // replace create with store
         $routeName = str_replace('create', 'store', $routeName);
-        var_dump($routeName);
-        // dd($permissions);
         if (!in_array($routeName, $permissions)) {
             // Redirect or abort if the user does not have the required permission
             return redirect('/dashboard')->withErrors('You do not have permission to access this resource.');
