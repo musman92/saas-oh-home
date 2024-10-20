@@ -15,9 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @can('todo.view')
                     <x-nav-link :href="route('todos.index')" :active="request()->routeIs('todos.*')">
                         {{ __('Todo') }}
                     </x-nav-link>
+                    @endcan
                 </div>
             </div>
 

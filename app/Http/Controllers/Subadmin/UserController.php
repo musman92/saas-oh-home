@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Subadmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -18,12 +19,12 @@ class UserController extends Controller
   // create resource functions
   public function create()
   {
-    return view('sub-admin.users.create');
+    $permissions = Permission::all();
+    return view('sub-admin.users.create', compact('permissions'));
   }
   // Store a newly created resource in storage
   public function store(Request $request)
   {
-    // dd($request->all());
     // Validate and store the data
     $validatedData = $request->validate([
       'name' => 'required|string|max:255',
@@ -31,25 +32,27 @@ class UserController extends Controller
       'password' => 'required|string|min:8',
     ]);
 
-    // dd($validatedData);
-
     // Create the sub-admin
-    $subAdmin = new User();
-    $subAdmin->name = $validatedData['name'];
-    $subAdmin->email = $validatedData['email'];
-    $subAdmin->password = bcrypt($validatedData['password']);
-    $subAdmin->save();
+    $user = new User();
+    $user->name = $validatedData['name'];
+    $user->email = $validatedData['email'];
+    $user->password = bcrypt($validatedData['password']);
+    $user->save();
 
-    // dd($subAdmin);
-
-    return redirect()->route('subadmins.users.index')->with('success', 'Sub Admin created successfully.');
+    // Assign permissions
+    if ($request->filled('permissions')) {
+      $user->syncPermissions($request->permissions);
+    }
+    return redirect()->route('subadmin.users.index')->with('success', 'Sub Admin created successfully.');
   }
 
   // Show the form for editing the specified resource
   public function edit($id)
   {
-    $subAdmin = User::findOrFail($id);
-    return view('sub-admin.users.edit', compact('subAdmin'));
+    $user = User::findOrFail($id);
+    $permissions = Permission::all();
+    $userPermissions = $user->permissions->pluck('id')->toArray();
+    return view('sub-admin.users.edit', compact('user', 'permissions', 'userPermissions'));
   }
 
   // Update the specified resource in storage
@@ -63,13 +66,20 @@ class UserController extends Controller
     ]);
 
     // Update the sub-admin
-    $subAdmin = User::findOrFail($id);
-    $subAdmin->name = $validatedData['name'];
-    $subAdmin->email = $validatedData['email'];
+    $user = User::findOrFail($id);
+    $user->name = $validatedData['name'];
+    $user->email = $validatedData['email'];
     if ($request->filled('password')) {
-      $subAdmin->password = bcrypt($validatedData['password']);
+      $user->password = bcrypt($validatedData['password']);
     }
-    $subAdmin->save();
+    $user->save();
+
+    // Assign permissions
+    if (count($request->permissions)) {
+      $user->syncPermissions($request->permissions);
+    } else {
+      $user->syncPermissions([]);
+    }
 
     return redirect()->route('subadmin.users.index')->with('success', 'Sub-admin updated successfully.');
   }
@@ -77,8 +87,8 @@ class UserController extends Controller
   // Remove the specified resource from storage
   public function destroy($id)
   {
-    $subAdmin = User::findOrFail($id);
-    $subAdmin->delete();
+    $user = User::findOrFail($id);
+    $user->delete();
 
     return redirect()->route('subadmin.users.index')->with('success', 'Sub-admin deleted successfully.');
   }

@@ -38,9 +38,21 @@
                           />
                           <x-input-error class="mt-2" :messages="$errors->get('password')" />
                         </div>
+                        <div class="mb-4">
+                          <x-input-label for="permissions" :value="__('Permissions')" />
+                          <div class="mt-1 block w-full">
+                            @foreach($permissions as $permission)
+                              <div class="flex items-center mb-2">
+                                <input id="permission-{{ $permission->id }}" name="permissions[]" type="checkbox" value="{{ $permission->id }}" class="form-checkbox">
+                                <label for="permission-{{ $permission->id }}" class="ml-2">{{ $permission->name }}</label>
+                              </div>
+                            @endforeach
+                          </div>
+                          <x-input-error class="mt-2" :messages="$errors->get('permissions')" />
+                        </div>
 
                         <div>
-                          <x-primary-button>{{ __('Create Sub Admin') }}</x-primary-button>
+                          <x-primary-button>{{ __('Create User') }}</x-primary-button>
                         </div>
                     </form>
                 </div>
