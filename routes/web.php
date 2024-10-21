@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     /**
      * TODOs Route
      */
-    Route::group(['middleware' => ['permission']], function () {
+    Route::group(['middleware' => ['permission', 'subscription.active']], function () {
         Route::resource('todos', TodoController::class);
     });
 });

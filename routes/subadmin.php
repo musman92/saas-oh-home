@@ -40,7 +40,9 @@ Route::group(['namespace' => 'Subadmin', 'prefix' => 'subadmin', 'as' => 'subadm
     /**
      * User Routes
      */
-    Route::resource('users', UserController::class);
+    Route::group(['middleware' => ['subscription.active']], function () {
+      Route::resource('users', UserController::class);
+    });
 
   });
 });

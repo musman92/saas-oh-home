@@ -14,9 +14,9 @@ class SubscriptionController extends Controller
     $sub_admin = auth()->user()->created_by;
     $plans = Plan::select('plans.*', 'subscriptions.stripe_status')->where('level', 'sub_user')
       ->leftJoin('subscriptions', function($join) {
-          $join->on('plans.stripe_plan_id', '=', 'subscriptions.stripe_price')
-           ->where('subscriptions.stripe_status', 'active')
-           ->where('subscriptions.user_id', auth()->user()->id);
+        $join->on('plans.stripe_plan_id', '=', 'subscriptions.stripe_price')
+          ->where('subscriptions.stripe_status', 'active')
+          ->where('subscriptions.user_id', auth()->user()->id);
       })
       ->where([
         'plans.user_id' => $sub_admin,

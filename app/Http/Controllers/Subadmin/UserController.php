@@ -37,13 +37,14 @@ class UserController extends Controller
     $user->name = $validatedData['name'];
     $user->email = $validatedData['email'];
     $user->password = bcrypt($validatedData['password']);
+    $user->created_by = auth()->guard('subadmin')->user()->id;
     $user->save();
 
     // Assign permissions
     if ($request->filled('permissions')) {
       $user->syncPermissions($request->permissions);
     }
-    return redirect()->route('subadmin.users.index')->with('success', 'Sub Admin created successfully.');
+    return redirect()->route('subadmin.users.index')->with('success', 'User created successfully.');
   }
 
   // Show the form for editing the specified resource
@@ -81,7 +82,7 @@ class UserController extends Controller
       $user->syncPermissions([]);
     }
 
-    return redirect()->route('subadmin.users.index')->with('success', 'Sub-admin updated successfully.');
+    return redirect()->route('subadmin.users.index')->with('success', 'User updated successfully.');
   }
 
   // Remove the specified resource from storage
@@ -90,6 +91,6 @@ class UserController extends Controller
     $user = User::findOrFail($id);
     $user->delete();
 
-    return redirect()->route('subadmin.users.index')->with('success', 'Sub-admin deleted successfully.');
+    return redirect()->route('subadmin.users.index')->with('success', 'User deleted successfully.');
   }
 }

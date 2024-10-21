@@ -32,7 +32,7 @@ class SubscriptionController extends Controller
     Cashier::useCustomerModel(User::class);
     $plan = Plan::find($request->plan);
     $subscription = auth()->guard('subadmin')->user()
-      ->newSubscription($request->plan, $plan->stripe_plan_id)
+      ->newSubscription('default', $plan->stripe_plan_id)
       ->create($request->token);
 
     return redirect()->route('subs.index')->with('success', 'Subscription created successfully');
