@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Subadmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Laravel\Cashier\Cashier;
 use App\Models\Plan;
+use App\Models\SubAdmin;
 
 class SubscriptionController extends Controller
 {
@@ -12,7 +14,6 @@ class SubscriptionController extends Controller
   {
     $plans = Plan::select('plans.*', 'subscriptions.stripe_status')->where('level', 'sub_admin')
       ->leftJoin('subscriptions', 'plans.stripe_plan_id', '=', 'subscriptions.stripe_price')
-      // ->where('subscriptions.stripe_status', '<>', 'incomplete')
       ->groupBy('plans.id')
       ->get();
     return view('sub-admin.subscription.index', compact('plans'));
@@ -28,12 +29,13 @@ class SubscriptionController extends Controller
 
   public function subscription(Request $request)
   {
-    // dd($request->all());
+    Cashier::useCustomerModel(User::class);
     $plan = Plan::find($request->plan);
     $subscription = auth()->guard('subadmin')->user()
       ->newSubscription($request->plan, $plan->stripe_plan_id)
       ->create($request->token);
-    dd($subscription);
+
+    return redirect()->route('subs.index')->with('success', 'Subscription created successfully');
   }
 
 }

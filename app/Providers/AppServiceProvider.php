@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Cashier::useCustomerModel(User::class);
-        Cashier::useCustomerModel(SubAdmin::class);
+        // Cashier::useCustomerModel(User::class);
+        // Cashier::useCustomerModel(SubAdmin::class);
     }
 }

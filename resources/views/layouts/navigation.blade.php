@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('subs.index')" :active="request()->routeIs('subs.*')">
+                        {{ __('Subscription') }}
+                    </x-nav-link>
                     @can('todos.index')
                     <x-nav-link :href="route('todos.index')" :active="request()->routeIs('todos.*')">
                         {{ __('Todo') }}

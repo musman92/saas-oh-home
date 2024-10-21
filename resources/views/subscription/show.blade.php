@@ -1,7 +1,7 @@
-<x-sub-admin-app-layout>
+<x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ __('Dashboard') }}
+      {{ __('User Subscription') }}
     </h2>
   </x-slot>
 
@@ -11,7 +11,7 @@
         <div class="p-6 text-gray-900 dark:text-gray-100">
           You will be charged <b>${{ number_format($plan->amount, 2) }}</b> for <b>{{ $plan->name }}</b> Plan
 
-          <form id="payment-form" action="{{ route('subadmin.subs.create') }}" method="POST">
+          <form id="payment-form" action="{{ route('subs.create') }}" method="POST">
             @csrf
             <input type="hidden" name="plan" id="plan" value="{{ $plan->id }}">
             <div class="mb-4">
@@ -73,4 +73,4 @@
             }
         });
     </script>
-</x-sub-admin-app-layout>
+</x-app-layout>

@@ -26,6 +26,7 @@
                     </div>
                 </header>
             @endif
+            @include('partials.alerts')
 
             <!-- Page Content -->
             <main>
