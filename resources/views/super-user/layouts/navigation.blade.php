@@ -8,7 +8,7 @@
                     <a href="{{ route('superuser.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
-                    <span class="text-white font-bold ps-3">Sub User</span>
+                    <span class="text-white font-bold ps-3">Super User</span>
                 </div>
 
                 <!-- Navigation Links -->
